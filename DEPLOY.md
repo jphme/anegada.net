@@ -103,6 +103,14 @@ be guessed. In Cloudflare enter the name without the domain suffix
 
 ## 3. Redirecting anegada.eu → anegada.net
 
+> **Status 23.09.2026:** anegada.eu already sends a Cloudflare redirect (302) to the old Notion page
+> `https://jph1.notion.site/Anegada-47404ba8279641e0804f6cf35ce46eac`, and the zone already has proxied
+> A/AAAA records for `@` and `www`. So you do **not** need the placeholder records below: find the existing
+> rule (Rules → Overview in the anegada.eu zone; it may be a Redirect Rule, a Page Rule or a Bulk Redirect)
+> and change its target to anegada.net as described. Mail for jan@anegada.eu runs through Cloudflare Email
+> Routing (MX `route1-3.mx.cloudflare.net`, SPF TXT); leave those records alone. anegada.net itself has
+> Google Workspace mail records (MX `smtp.google.com`, SPF and google-site-verification TXT); leave those too.
+
 Cloudflare can only run a Redirect Rule on a hostname that resolves through its proxy, so
 the zone `anegada.eu` needs proxied placeholder records first. The addresses are reserved
 documentation addresses that are never actually contacted — the proxy answers before that.
