@@ -64,17 +64,17 @@
     particles = targets.map(function (t, i) {
       return {
         tx: t[0], ty: t[1],
-        sx: 0.5 + (u = Math.sqrt(Math.random()) * 0.5) * Math.cos(v = Math.random() * 6.2832),
+        sx: 0.5 + (u = Math.sqrt(Math.random()) * 0.42) * Math.cos(v = Math.random() * 6.2832),
         sy: 0.5 + u * Math.sin(v),                                  // start: soft elliptical cloud, as canvas fraction
-        ph: Math.random() * Math.PI * 2, sp: 0.25 + Math.random() * 0.35,
-        delay: 0.6 + (t[0] / VIEW_W) * 1.2 + Math.random() * 0.9,   // gentle left-to-right sweep
+        ph: Math.random() * Math.PI * 2, sp: 0.15 + Math.random() * 0.25,
+        delay: 2.0 + (t[0] / VIEW_W) * 1.8 + Math.random() * 1.4,   // drift first, then a slow left-to-right sweep
         c: COLORS[i % COLORS.length], r: 0.7 + Math.random() * 0.35
       };
     });
   }
 
   var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
-  var FLY = 3.0, SETTLE_END = 5.9, FADE = 1.4;   // seconds; last dot lands at ~5.7 s
+  var FLY = 4.5, SETTLE_END = 10.2, FADE = 1.8;  // seconds; last dot lands at ~9.7 s
 
   function frame(now) {
     // data-end="solid" (default): dots hand over to the SVG; data-end="dots": the dots stay.
@@ -91,8 +91,8 @@
     var dot = Math.max(box.k * step * 0.62, 1.1);   // radius relative to the grid spacing
     particles.forEach(function (p) {
       // Wandering position: slow drift around the starting point.
-      var wx = p.sx * box.w + Math.sin(t * p.sp + p.ph) * 18;
-      var wy = p.sy * box.h + Math.cos(t * p.sp * 0.8 + p.ph) * 12;
+      var wx = p.sx * box.w + Math.sin(t * p.sp + p.ph) * 28;
+      var wy = p.sy * box.h + Math.cos(t * p.sp * 0.8 + p.ph) * 18;
       var gx = box.x + p.tx * box.k, gy = box.y + p.ty * box.k;
       var a = ease(Math.min(Math.max((t - p.delay) / FLY, 0), 1));
       // Once settled, a faint breathing jitter keeps the dots alive.
