@@ -24,6 +24,9 @@
   var canvas = document.createElement("canvas");
   canvas.className = "logo-canvas";
   canvas.setAttribute("aria-hidden", "true");
+  // Positioning is set here as well as in style.css, so a stale cached stylesheet cannot misplace the dots.
+  wrap.style.position = "relative";
+  canvas.style.cssText = "position:absolute;left:-12%;top:-90px;width:124%;height:calc(100% + 180px);pointer-events:none";
   wrap.appendChild(canvas);
   var ctx = canvas.getContext("2d");
 
@@ -48,10 +51,12 @@
   }
 
   function layout() {
+    // Called every frame, so the dots still find the letters if the page shifts while they fly.
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     var r = canvas.getBoundingClientRect(), s = svg.getBoundingClientRect();
-    canvas.width = Math.round(r.width * dpr);
-    canvas.height = Math.round(r.height * dpr);
+    var cw = Math.round(r.width * dpr), ch = Math.round(r.height * dpr);
+    if (canvas.width !== cw) canvas.width = cw;
+    if (canvas.height !== ch) canvas.height = ch;
     // Logo position inside the canvas (CSS px) and px per viewBox unit.
     box = { x: s.left - r.left, y: s.top - r.top, k: s.width / VIEW_W, w: r.width, h: r.height };
   }
@@ -81,6 +86,7 @@
     var END = wrap.dataset.end || "solid";
     if (start === null) start = now;
     var t = (now - start) / 1000;
+    layout();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, box.w, box.h);
 
