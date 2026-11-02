@@ -73,6 +73,23 @@ a:focus-visible {
 
 .logo--small { max-width: min(200px, 60vw); margin: 0; }
 
+/* Particle intro (assets/logo-particles.js): the canvas reaches beyond the
+   wordmark so the dots have room to drift before they settle. */
+.logo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: min(420px, 78vw);
+  margin: 0 auto;
+}
+
+.logo-canvas {
+  position: absolute;
+  inset: -90px -12%;
+  width: 124%;
+  height: calc(100% + 180px);
+  pointer-events: none;
+}
+
 a.logo-link {
   display: inline-block;
   border-bottom: 0;
