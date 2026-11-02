@@ -66,15 +66,15 @@
         tx: t[0], ty: t[1],
         sx: 0.5 + (u = Math.sqrt(Math.random()) * 0.5) * Math.cos(v = Math.random() * 6.2832),
         sy: 0.5 + u * Math.sin(v),                                  // start: soft elliptical cloud, as canvas fraction
-        ph: Math.random() * Math.PI * 2, sp: 0.4 + Math.random() * 0.6,
-        delay: 0.35 + (t[0] / VIEW_W) * 0.7 + Math.random() * 0.5,  // gentle left-to-right sweep
+        ph: Math.random() * Math.PI * 2, sp: 0.25 + Math.random() * 0.35,
+        delay: 0.6 + (t[0] / VIEW_W) * 1.2 + Math.random() * 0.9,   // gentle left-to-right sweep
         c: COLORS[i % COLORS.length], r: 0.7 + Math.random() * 0.35
       };
     });
   }
 
   var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
-  var FLY = 1.7, SETTLE_END = 3.2, FADE = 0.9;
+  var FLY = 3.0, SETTLE_END = 5.9, FADE = 1.4;   // seconds; last dot lands at ~5.7 s
 
   function frame(now) {
     // data-end="solid" (default): dots hand over to the SVG; data-end="dots": the dots stay.
